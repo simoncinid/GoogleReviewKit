@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent } from "react";
 import WidgetBuilder from "./components/widget-builder";
 import ReviewWidget from "./components/review-widget";
-import { trackWaitlistLead } from "./components/meta-pixel";
+import { trackWaitlistLead } from "./components/meta-pixel-track";
 import { samplePlace } from "../lib/widget-sample";
 
 function MobileWidgetCallout() {

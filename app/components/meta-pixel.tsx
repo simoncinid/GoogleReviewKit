@@ -1,26 +1,11 @@
-"use client";
-
 import Script from "next/script";
+import { META_PIXEL_ID } from "./meta-pixel-id";
 
-const PIXEL_ID = "1077867428367457";
-
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-    _fbq?: (...args: unknown[]) => void;
-  }
-}
-
-/** Fire only after a successful waitlist submit. */
-export function trackWaitlistLead() {
-  if (typeof window === "undefined" || typeof window.fbq !== "function") return;
-  window.fbq("track", "Lead");
-}
-
+/** Base Meta Pixel — in head so Meta can detect it in page source. */
 export default function MetaPixel() {
   return (
     <>
-      <Script id="meta-pixel" strategy="afterInteractive">
+      <Script id="meta-pixel" strategy="beforeInteractive">
         {`
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -30,7 +15,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '${PIXEL_ID}');
+fbq('init', '${META_PIXEL_ID}');
 fbq('track', 'PageView');
         `}
       </Script>
@@ -39,7 +24,7 @@ fbq('track', 'PageView');
           height={1}
           width={1}
           style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
+          src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
           alt=""
         />
       </noscript>
