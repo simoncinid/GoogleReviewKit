@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Caveat, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import MetaPixel from "./components/meta-pixel";
 import "./globals.css";
 
@@ -64,6 +65,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${caveat.variable}`}>
         <MetaPixel />
         {children}
+        <Analytics />
       </body>
     </html>
   );
