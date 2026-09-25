@@ -1,12 +1,6 @@
-import Script from "next/script";
 import { META_PIXEL_ID } from "./meta-pixel-id";
 
-/** Base Meta Pixel — in head so Meta can detect it in page source. */
-export default function MetaPixel() {
-  return (
-    <>
-      <Script id="meta-pixel" strategy="beforeInteractive">
-        {`
+const PIXEL_BOOTSTRAP = `
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -17,8 +11,16 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${META_PIXEL_ID}');
 fbq('track', 'PageView');
-        `}
-      </Script>
+`;
+
+/** Base Meta Pixel in <head> (raw script so Meta Events Manager can detect it). */
+export default function MetaPixel() {
+  return (
+    <>
+      <script
+        id="meta-pixel"
+        dangerouslySetInnerHTML={{ __html: PIXEL_BOOTSTRAP }}
+      />
       <noscript>
         <img
           height={1}
