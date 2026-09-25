@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Caveat, Inter } from "next/font/google";
+import MetaPixel from "./components/meta-pixel";
 import "./globals.css";
 
 const inter = Inter({
@@ -60,7 +61,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${caveat.variable}`}>{children}</body>
+      <body className={`${inter.variable} ${caveat.variable}`}>
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }

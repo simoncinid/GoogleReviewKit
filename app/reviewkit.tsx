@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent } from "react";
 import WidgetBuilder from "./components/widget-builder";
 import ReviewWidget from "./components/review-widget";
+import { trackWaitlistLead } from "./components/meta-pixel";
 import { samplePlace } from "../lib/widget-sample";
 
 function MobileWidgetCallout() {
@@ -262,6 +263,7 @@ export default function GoogleReviewsKit({
         setWaitlistError(data.error || "Something went wrong. Try again.");
         return;
       }
+      trackWaitlistLead();
       setWaitlistStatus("done");
       setWaitlistEmail("");
       setWaitlistPhone("");
