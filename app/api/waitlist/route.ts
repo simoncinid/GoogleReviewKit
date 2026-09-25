@@ -1,5 +1,7 @@
 import { sendWaitlistEmail } from "../../../lib/gmail";
 
+export const runtime = "nodejs";
+
 function reply(data: unknown, status = 200) {
   return Response.json(data, {
     status,
