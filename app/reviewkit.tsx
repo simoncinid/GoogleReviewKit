@@ -263,7 +263,7 @@ export default function GoogleReviewsKit({
         setWaitlistError(data.error || "Something went wrong. Try again.");
         return;
       }
-      trackWaitlistLead();
+      if (email) trackWaitlistLead();
       setWaitlistStatus("done");
       setWaitlistEmail("");
       setWaitlistPhone("");
