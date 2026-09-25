@@ -23,12 +23,12 @@ async function render(path = "/", init = {}) {
   );
 }
 
-test("serves the ReviewKit landing page with offer and example disclosure", async () => {
+test("serves the GoogleReviewsKit landing page with offer and example disclosure", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html/);
   const html = await response.text();
-  assert.match(html, /<title>ReviewKit/);
+  assert.match(html, /<title>GoogleReviewsKit/);
   assert.match(html, /12 months of automatic Google review syncing/);
   assert.match(html, /fictional example reviews/);
   assert.match(html, /Checkout is not open yet/);

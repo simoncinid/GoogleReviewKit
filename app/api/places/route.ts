@@ -12,9 +12,9 @@ function reply(data: unknown, status = 200) {
 export async function POST(request: Request) {
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin)
-    return reply({ error: "This search is only available on ReviewKit." }, 403);
+    return reply({ error: "This search is only available on GoogleReviewsKit." }, 403);
   if (request.headers.get("sec-fetch-site") === "cross-site")
-    return reply({ error: "This search is only available on ReviewKit." }, 403);
+    return reply({ error: "This search is only available on GoogleReviewsKit." }, 403);
   if (!request.headers.get("content-type")?.includes("application/json"))
     return reply({ error: "Expected a search request." }, 415);
   if (Number(request.headers.get("content-length") || 0) > 2048)
@@ -39,11 +39,13 @@ export async function POST(request: Request) {
       { error: "Enter a business name and city (3–160 characters)." },
       400,
     );
-  let key = process.env.GOOGLE_PLACES_API_KEY;
+  let key = process.env.GOOGLE_PLACES_API_KEY?.trim();
   if (!key) {
     try {
       const { env } = await import("cloudflare:workers");
-      key = (env as { GOOGLE_PLACES_API_KEY?: string }).GOOGLE_PLACES_API_KEY;
+      key = (
+        env as { GOOGLE_PLACES_API_KEY?: string }
+      ).GOOGLE_PLACES_API_KEY?.trim();
     } catch {}
   }
   if (!key)
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
   const now = Date.now();
   for (const [id, value] of limits) if (value.until < now) limits.delete(id);
   const bucket = limits.get(ip) || { count: 0, until: now + 60000 };
-  if (bucket.count >= 12)
+  if (bucket.count >= 40)
     return reply(
       { error: "A few too many searches. Please try again in a minute." },
       429,

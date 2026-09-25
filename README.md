@@ -1,4 +1,4 @@
-# ReviewKit
+# GoogleReviewsKit
 
 Mobile-first landing page and free interactive widget builder, using React, TypeScript, and Sites/vinext.
 

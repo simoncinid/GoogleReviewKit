@@ -1,4 +1,4 @@
-# ReviewKit: preview to live widget
+# GoogleReviewsKit: preview to live widget
 
 ## Implemented now
 

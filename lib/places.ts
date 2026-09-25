@@ -4,9 +4,14 @@ export type GoogleReview = {
   text?: { text?: string; languageCode?: string };
   originalText?: { text?: string; languageCode?: string };
   relativePublishTimeDescription?: string;
+  publishTime?: string;
   authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
   googleMapsUri?: string;
   visitDate?: { year?: number; month?: number };
+  /** Optional media URLs when available (sample / future enrichment). */
+  photoUrls?: string[];
+  /** Optional Local Guide flag when known (sample / enrichment). */
+  isLocalGuide?: boolean;
 };
 export type Place = {
   id: string;
@@ -20,9 +25,11 @@ export type Place = {
   reviews?: GoogleReview[];
 };
 export const SEARCH_FIELDS =
-  "places.id,places.displayName,places.formattedAddress,places.googleMapsUri,places.attributions";
+  "places.id,places.displayName,places.formattedAddress,places.googleMapsUri,places.attributions,places.rating,places.userRatingCount";
+/** Place Details (New): include originalText so we never rely on translated review copy. */
 export const DETAIL_FIELDS =
-  "id,displayName,formattedAddress,rating,userRatingCount,reviews,googleMapsUri,googleMapsLinks,attributions";
+  "id,displayName,formattedAddress,rating,userRatingCount,reviews,reviews.originalText,reviews.text,reviews.rating,reviews.relativePublishTimeDescription,reviews.publishTime,reviews.authorAttribution,reviews.googleMapsUri,reviews.visitDate,googleMapsUri,googleMapsLinks,attributions";
+export type ReviewsSort = "MOST_RELEVANT" | "NEWEST";
 export function safeGoogleUrl(value?: string) {
   if (!value) return undefined;
   try {
@@ -33,7 +40,11 @@ export function safeGoogleUrl(value?: string) {
   }
 }
 export async function queryPlaces(
-  input: { query?: string; placeId?: string },
+  input: {
+    query?: string;
+    placeId?: string;
+    reviewsSort?: ReviewsSort;
+  },
   key: string,
   upstream: typeof fetch = fetch,
 ) {

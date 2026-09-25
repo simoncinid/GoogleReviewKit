@@ -1,0 +1,6 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "reviewkit",
+  "compatibility_date": "2026-02-12",
+  "main": "./worker/index.ts"
+}

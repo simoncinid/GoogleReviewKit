@@ -58,6 +58,7 @@ test("Place Details requests the selected location and preserves original review
     },
   );
   assert.match(call.url, /\/places\/place123\?languageCode=en/);
+  assert.doesNotMatch(call.url, /reviewsSort=/);
   assert.equal(call.options.method, "GET");
   assert.equal(call.options.body, undefined);
   assert.equal(call.options.headers["X-Goog-FieldMask"], DETAIL_FIELDS);

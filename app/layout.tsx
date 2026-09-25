@@ -1,21 +1,32 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Geist } from "next/font/google";
+import { Caveat, Inter } from "next/font/google";
 import "./globals.css";
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+  display: "swap",
+});
+
 const baseMetadata: Metadata = {
-  title: "ReviewKit — Your Google reviews. Working for you.",
+  title: "GoogleReviewsKit — Your Google reviews. Working for you.",
   description:
-    "Turn your hard-earned Google reviews into beautiful website widgets. Five formats, simple installation, and 12 months of syncing. Founding price: $99.",
+    "Turn your hard-earned Google reviews into beautiful website widgets. Five formats, simple installation, and flexible pricing from free.",
   icons: { icon: "/favicon.png" },
   openGraph: {
-    title: "ReviewKit — Put your reviews to work",
+    title: "GoogleReviewsKit — Put your reviews to work",
     description:
-      "Beautiful review widgets for small businesses. $99 once. A year of syncing included.",
+      "Beautiful review widgets for small businesses. Start free or pay once.",
     type: "website",
     locale: "en_US",
   },
-  twitter: { card: "summary", title: "ReviewKit — Put your reviews to work" },
+  twitter: { card: "summary", title: "GoogleReviewsKit — Put your reviews to work" },
 };
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -31,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     url: `${origin}/og.png`,
     width: 1536,
     height: 1024,
-    alt: "ReviewKit — Your reviews. Your style. Fully customizable Google review widgets.",
+    alt: "GoogleReviewsKit — Your reviews. Your style. Fully customizable Google review widgets.",
   };
   return {
     ...baseMetadata,
@@ -39,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: { ...baseMetadata.openGraph, images: [socialImage] },
     twitter: {
       card: "summary_large_image",
-      title: "ReviewKit — Your reviews. Your style.",
+      title: "GoogleReviewsKit — Your reviews. Your style.",
       images: [socialImage.url],
     },
   };
@@ -49,7 +60,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={geist.variable}>{children}</body>
+      <body className={`${inter.variable} ${caveat.variable}`}>{children}</body>
     </html>
   );
 }

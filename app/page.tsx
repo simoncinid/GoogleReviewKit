@@ -1,2 +1,6 @@
-import ReviewKit from './reviewkit';
-export default function Page() { return <ReviewKit checkoutUrl={process.env.REVIEWKIT_CHECKOUT_URL || ''} />; }
+import GoogleReviewsKit from "./reviewkit";
+
+/** Public entry: waitlist / pre-release only. */
+export default function Page() {
+  return <GoogleReviewsKit variant="pre-release" />;
+}

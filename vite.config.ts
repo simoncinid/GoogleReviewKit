@@ -13,6 +13,7 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
   main: "./worker/index.ts",
+  compatibility_date: "2026-02-12",
   compatibility_flags: ["nodejs_compat"],
   d1_databases: d1
     ? [
@@ -33,7 +34,19 @@ const localBindingConfig = {
     : [],
 };
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ mode }) => {
+  const { loadEnv } = await import("vite");
+  const env = loadEnv(mode, process.cwd(), "");
+  process.env.GOOGLE_PLACES_API_KEY ??= env.GOOGLE_PLACES_API_KEY;
+  process.env.STRIPE_SECRET_KEY ??= env.STRIPE_SECRET_KEY;
+  process.env.STRIPE_PRICE_FOUNDING_SETUP ??= env.STRIPE_PRICE_FOUNDING_SETUP;
+  process.env.STRIPE_PRICE_FOUNDING_MONTHLY ??= env.STRIPE_PRICE_FOUNDING_MONTHLY;
+  process.env.STRIPE_PRICE_MONTHLY ??= env.STRIPE_PRICE_MONTHLY;
+  process.env.STRIPE_WEBHOOK_SECRET ??= env.STRIPE_WEBHOOK_SECRET;
+  process.env.SENDER_ADDRESS ??= env.SENDER_ADDRESS;
+  process.env.GMAIL_APP_PASSWORD ??= env.GMAIL_APP_PASSWORD;
+  process.env.DEST_ADDRESS ??= env.DEST_ADDRESS;
+
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= "false";
