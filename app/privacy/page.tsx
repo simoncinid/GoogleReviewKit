@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy — GoogleReviewsKit",
+  title: "Privacy Policy",
   description:
-    "How GoogleReviewsKit processes personal data under the GDPR (EU Regulation 2016/679).",
+    "Privacy Policy for GoogleReviewsKit — how we handle data for visitors and waitlist signups in the United States and EU (GDPR).",
+  alternates: { canonical: "https://www.googlereviewskit.it/privacy" },
 };
 
 const CONTROLLER = {

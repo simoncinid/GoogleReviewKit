@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Caveat, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import MetaPixel from "./components/meta-pixel";
+import { SITE_NAME, SITE_URL, SEO } from "../lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,52 +16,69 @@ const caveat = Caveat({
   display: "swap",
 });
 
-const baseMetadata: Metadata = {
-  title: "GoogleReviewsKit — Your Google reviews. Working for you.",
-  description:
-    "Turn your hard-earned Google reviews into beautiful website widgets. Five formats, simple installation, and flexible pricing from free.",
-  icons: { icon: "/favicon.png" },
-  openGraph: {
-    title: "GoogleReviewsKit — Put your reviews to work",
-    description:
-      "Beautiful review widgets for small businesses. Start free or pay once.",
-    type: "website",
-    locale: "en_US",
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SEO.title,
+    template: SEO.titleTemplate,
   },
-  twitter: { card: "summary", title: "GoogleReviewsKit — Put your reviews to work" },
-};
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const incoming =
-    requestHeaders.get("x-forwarded-host") ||
-    requestHeaders.get("host") ||
-    "reviewkit.diegosimoncini.chatgpt.site";
-  const host = /^[a-zA-Z0-9.:-]+$/.test(incoming)
-    ? incoming
-    : "reviewkit.diegosimoncini.chatgpt.site";
-  const origin = `${host.startsWith("localhost") ? "http" : "https"}://${host}`;
-  const socialImage = {
-    url: `${origin}/og.png`,
-    width: 1536,
-    height: 1024,
-    alt: "GoogleReviewsKit — Your reviews. Your style. Fully customizable Google review widgets.",
-  };
-  return {
-    ...baseMetadata,
-    metadataBase: new URL(origin),
-    openGraph: { ...baseMetadata.openGraph, images: [socialImage] },
-    twitter: {
-      card: "summary_large_image",
-      title: "GoogleReviewsKit — Your reviews. Your style.",
-      images: [socialImage.url],
+  description: SEO.description,
+  keywords: SEO.keywords,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "business",
+  icons: { icon: "/favicon.png" },
+  alternates: {
+    canonical: SITE_URL,
+    languages: { "en-US": SITE_URL },
+  },
+  openGraph: {
+    title: SEO.ogTitle,
+    description: SEO.ogDescription,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1536,
+        height: 1024,
+        alt: "GoogleReviewsKit — Customizable Google review widgets for your website",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SEO.ogTitle,
+    description: SEO.ogDescription,
+    images: ["/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
-  };
-}
+  },
+  other: {
+    "geo.region": "US",
+    "geo.placename": "United States",
+    language: "en-US",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en-US">
       <head>
         <MetaPixel />
       </head>

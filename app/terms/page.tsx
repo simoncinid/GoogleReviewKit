@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms & Conditions — GoogleReviewsKit",
+  title: "Terms & Conditions",
   description:
-    "Terms of use and sale for GoogleReviewsKit, operated by Diego Simoncini.",
+    "Terms of use and sale for GoogleReviewsKit, the Google reviews widget for US small business websites.",
+  alternates: { canonical: "https://www.googlereviewskit.it/terms" },
 };
 
 const SELLER = {
